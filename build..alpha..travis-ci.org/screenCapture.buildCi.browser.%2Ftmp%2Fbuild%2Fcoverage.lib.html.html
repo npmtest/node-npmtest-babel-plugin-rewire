@@ -1,0 +1,976 @@
+<html lang="en"><head>
+    <title>Code coverage report for node-npmtest-babel-plugin-rewire/node_modules/babel-plugin-rewire/lib/RewireState.js</title>
+    <meta charset="utf-8">
+    <style>
+        body, html {
+            margin:0; padding: 0;
+        }
+        body {
+            font-family: Arial, Helvetica;
+            font-size: 10pt;
+        }
+        div.header, div.footer {
+            background: #eee;
+            padding: 1em;
+        }
+        div.header {
+            height: 160px;
+            padding: 0 1em 0 1em;
+            z-index: 100;
+            position: fixed;
+            top: 0;
+            border-bottom: 1px solid #666;
+            width: 100%;
+        }
+        div.footer {
+            border-top: 1px solid #666;
+        }
+        div.body {
+            margin-top: 170px;
+        }
+        div.meta {
+            font-size: 90%;
+            text-align: center;
+        }
+        h1, h2, h3 {
+            font-weight: normal;
+        }
+        h1 {
+            font-size: 12pt;
+        }
+        h2 {
+            font-size: 10pt;
+        }
+        pre {
+            font-family: Menlo, Monaco, Consolas, Courier New, monospace;
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            tab-size: 2;
+        }
+
+        div.path { font-size: 110%; }
+        div.path a:link, div.path a:visited { color: #000; }
+        table.coverage { border-collapse: collapse; margin:0; padding: 0 }
+
+        table.coverage td {
+            margin: 0;
+            padding: 0;
+            color: #111;
+            vertical-align: top;
+        }
+        table.coverage td.line-count {
+            width: 50px;
+            text-align: right;
+            padding-right: 5px;
+        }
+        table.coverage td.line-coverage {
+            color: #777 !important;
+            text-align: right;
+            border-left: 1px solid #666;
+            border-right: 1px solid #666;
+        }
+
+        table.coverage td.text {
+        }
+
+        table.coverage td span.cline-any {
+            display: inline-block;
+            padding: 0 5px;
+            width: 40px;
+        }
+        table.coverage td span.cline-neutral {
+            background: #eee;
+        }
+        table.coverage td span.cline-yes {
+            background: #b5d592;
+            color: #999;
+        }
+        table.coverage td span.cline-no {
+            background: #fc8c84;
+        }
+
+        .cstat-yes { color: #111; }
+        .cstat-no { background: #fc8c84; color: #111; }
+        .fstat-no { background: #ffc520; color: #111 !important; }
+        .cbranch-no { background:  yellow !important; color: #111; }
+
+        .cstat-skip { background: #ddd; color: #111; }
+        .fstat-skip { background: #ddd; color: #111 !important; }
+        .cbranch-skip { background: #ddd !important; color: #111; }
+
+        .missing-if-branch {
+            display: inline-block;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: black;
+            color: yellow;
+        }
+
+        .skip-if-branch {
+            display: none;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: #ccc;
+            color: white;
+        }
+
+        .missing-if-branch .typ, .skip-if-branch .typ {
+            color: inherit !important;
+        }
+
+        .entity, .metric { font-weight: bold; }
+        .metric { display: inline-block; border: 1px solid #333; padding: 0.3em; background: white; }
+        .metric small { font-size: 80%; font-weight: normal; color: #666; }
+
+        div.coverage-summary table { border-collapse: collapse; margin: 3em; font-size: 110%; }
+        div.coverage-summary td, div.coverage-summary table  th { margin: 0; padding: 0.25em 1em; border-top: 1px solid #666; border-bottom: 1px solid #666; }
+        div.coverage-summary th { text-align: left; border: 1px solid #666; background: #eee; font-weight: normal; }
+        div.coverage-summary th.file { border-right: none !important; }
+        div.coverage-summary th.pic { border-left: none !important; text-align: right; }
+        div.coverage-summary th.pct { border-right: none !important; }
+        div.coverage-summary th.abs { border-left: none !important; text-align: right; }
+        div.coverage-summary td.pct { text-align: right; border-left: 1px solid #666; }
+        div.coverage-summary td.abs { text-align: right; font-size: 90%; color: #444; border-right: 1px solid #666; }
+        div.coverage-summary td.file { text-align: right; border-left: 1px solid #666; white-space: nowrap;  }
+        div.coverage-summary td.pic { min-width: 120px !important;  }
+        div.coverage-summary a:link { color: #000; }
+        div.coverage-summary a:visited { color: #333; }
+        div.coverage-summary tfoot td { border-top: 1px solid #666; }
+
+        div.coverage-summary .yui3-datatable-sort-indicator, div.coverage-summary .dummy-sort-indicator {
+            height: 10px;
+            width: 7px;
+            display: inline-block;
+            margin-left: 0.5em;
+        }
+        div.coverage-summary .yui3-datatable-sort-indicator {
+            background: no-repeat scroll 0 0 transparent;
+        }
+        div.coverage-summary .yui3-datatable-sorted .yui3-datatable-sort-indicator {
+            background-position: 0 -20px;
+        }
+        div.coverage-summary .yui3-datatable-sorted-desc .yui3-datatable-sort-indicator {
+            background-position: 0 -10px;
+        }
+
+        .high { background: #b5d592 !important; }
+        .medium { background: #ffe87c !important; }
+        .low { background: #fc8c84 !important; }
+
+        span.cover-fill, span.cover-empty {
+            display:inline-block;
+            border:1px solid #444;
+            background: white;
+            height: 12px;
+        }
+        span.cover-fill {
+            background: #ccc;
+            border-right: 1px solid #444;
+        }
+        span.cover-empty {
+            background: white;
+            border-left: none;
+        }
+        span.cover-full {
+            border-right: none !important;
+        }
+        pre.prettyprint {
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .com { color: #999 !important; }
+        .ignore-none { color: #999; font-weight: normal; }
+
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1 style="font-weight: bold;">
+        <a href="https://github.com/npmtest/node-npmtest-babel-plugin-rewire">npmtest-babel-plugin-rewire (v0.0.1)</a>
+    </h1>
+    <h1>Code coverage report for <span class="entity">node-npmtest-babel-plugin-rewire/node_modules/babel-plugin-rewire/lib/RewireState.js</span></h1>
+    <h2>
+        
+        Statements: <span class="metric">25.45% <small>(28 / 110)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Branches: <span class="metric">14.55% <small>(8 / 55)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Functions: <span class="metric">16.67% <small>(5 / 30)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Lines: <span class="metric">15.29% <small>(13 / 85)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../../index.html">All files</a> » <a href="index.html">node-npmtest-babel-plugin-rewire/node_modules/babel-plugin-rewire/lib/</a> » RewireState.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tbody><tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
+&nbsp;
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+&nbsp;
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i &lt; props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; <span class="missing-if-branch" title="else path not taken">E</span>if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { <span class="missing-if-branch" title="else path not taken">E</span>if (protoProps) defineProperties(Constructor.prototype, protoProps); <span class="missing-if-branch" title="if path not taken">I</span>if (staticProps) <span class="cstat-no" title="statement not covered">defineProperties(Constructor, staticProps); </span>return Constructor; }; }(); /*Copyright (c) 2015, Robert Binna &lt;r.binna@synedra.com&gt;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      Permission to use, copy, modify, and/or distribute this software for any
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      purpose with or without fee is hereby granted, provided that the above
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      copyright notice and this permission notice appear in all copies.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      THE SOFTWARE IS PROVIDED 'AS IS' AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.*/
+&nbsp;
+var _Templates = require('./Templates.js');
+&nbsp;
+var _RewireHelpers = require('./RewireHelpers.js');
+&nbsp;
+var _babelTypes = require('babel-types');
+&nbsp;
+var t = _interopRequireWildcard(_babelTypes);
+&nbsp;
+function _interopRequireWildcard(obj) { <span class="missing-if-branch" title="else path not taken">E</span>if (obj &amp;&amp; obj.__esModule) { return obj; } else { <span class="cstat-no" title="statement not covered">var newObj = {}; <span class="cstat-no" title="statement not covered"></span>if (obj != null) { <span class="cstat-no" title="statement not covered">for (var key in obj) { <span class="cstat-no" title="statement not covered">if (Object.prototype.hasOwnProperty.call(obj, key)) <span class="cstat-no" title="statement not covered">newObj[key] = obj[key]; </span></span>} </span>} <span class="cstat-no" title="statement not covered"></span>newObj.default = obj; <span class="cstat-no" title="statement not covered"></span>return newObj; </span>} }
+&nbsp;
+<span class="fstat-no" title="function not covered">function _classCallCheck(instance, Constructor) {</span> <span class="cstat-no" title="statement not covered">if (!(instance instanceof Constructor)) { <span class="cstat-no" title="statement not covered">throw new TypeError("Cannot call a class as a function"); </span>} </span>}
+&nbsp;
+var RewireState = function () {
+<span class="fstat-no" title="function not covered">	function RewireState(scope) {</span>
+<span class="cstat-no" title="statement not covered">		_classCallCheck(this, RewireState);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered">		this.isES6Module = false;</span>
+<span class="cstat-no" title="statement not covered">		this.hasES6Export = false;</span>
+<span class="cstat-no" title="statement not covered">		this.hasES6DefaultExport = false;</span>
+<span class="cstat-no" title="statement not covered">		this.nodesToAppendToProgramBody = [];</span>
+<span class="cstat-no" title="statement not covered">		this.hasCommonJSExport = false;</span>
+<span class="cstat-no" title="statement not covered">		this.accessors = {};</span>
+<span class="cstat-no" title="statement not covered">		this.trackedIdentfiers = {};</span>
+<span class="cstat-no" title="statement not covered">		this.isWildcardImport = {};</span>
+<span class="cstat-no" title="statement not covered">		this.ignoredIdentifiers = [];</span>
+<span class="cstat-no" title="statement not covered">		this.updateableVariables = {};</span>
+<span class="cstat-no" title="statement not covered">		this.getGlobalVariableHandleIdentifier = scope.generateUidIdentifier('getGlobalObject');</span>
+<span class="cstat-no" title="statement not covered">		this.getRewiredDataIdentifier = scope.generateUidIdentifier('__getRewiredData__');</span>
+<span class="cstat-no" title="statement not covered">		this.getRewireRegistryIdentifier = scope.generateUidIdentifier('__getRewireRegistry__');</span>
+<span class="cstat-no" title="statement not covered">		this.getUniqueGlobalModuleIdIdentifier = scope.generateUidIdentifier('__getRewireModuleId__');</span>
+<span class="cstat-no" title="statement not covered">		this.uniqueModuleIdIdentifier = scope.generateUidIdentifier('__RewireModuleId__');</span>
+<span class="cstat-no" title="statement not covered">		this.originalVariableAccessorIdentifier = scope.generateUidIdentifier('__get_original__');</span>
+<span class="cstat-no" title="statement not covered">		this.originalVariableSetterIdentifier = scope.generateUidIdentifier('__set_original__');</span>
+<span class="cstat-no" title="statement not covered">		this.updateOperationIdentifier = scope.generateUidIdentifier('__update_operation__');</span>
+<span class="cstat-no" title="statement not covered">		this.assignmentOperationIdentifier = scope.generateUidIdentifier('__assign__');</span>
+<span class="cstat-no" title="statement not covered">		this.typeofOriginalExportVariable = scope.generateUidIdentifier('typeOfOriginalExport');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered">		this.universalAccessors = {</span>
+			__get__: (0, _RewireHelpers.noRewire)(scope.generateUidIdentifier('__get__')),
+			__set__: (0, _RewireHelpers.noRewire)(scope.generateUidIdentifier('__set__')),
+			__reset__: (0, _RewireHelpers.noRewire)(scope.generateUidIdentifier('__reset__')),
+			__with__: (0, _RewireHelpers.noRewire)(scope.generateUidIdentifier('__with__')),
+			__RewireAPI__: (0, _RewireHelpers.noRewire)(scope.generateUidIdentifier('__RewireAPI__')),
+			__assignOperation: (0, _RewireHelpers.noRewire)(scope.generateUidIdentifier('__assign__'))
+		};
+	}
+&nbsp;
+	_createClass(RewireState, [{
+		key: 'appendToProgramBody',
+		value: <span class="fstat-no" title="function not covered">function appendToProgramBody(nodes) {</span>
+<span class="cstat-no" title="statement not covered">			if (!Array.isArray(nodes)) {</span>
+<span class="cstat-no" title="statement not covered">				nodes = [nodes];</span>
+			}
+<span class="cstat-no" title="statement not covered">			this.nodesToAppendToProgramBody = this.nodesToAppendToProgramBody.concat(nodes);</span>
+		}
+	}, {
+		key: 'prependToProgramBody',
+		value: <span class="fstat-no" title="function not covered">function prependToProgramBody(nodes) {</span>
+<span class="cstat-no" title="statement not covered">			if (!Array.isArray(nodes)) {</span>
+<span class="cstat-no" title="statement not covered">				nodes = [nodes];</span>
+			}
+<span class="cstat-no" title="statement not covered">			this.nodesToAppendToProgramBody = nodes.concat(this.nodesToAppendToProgramBody);</span>
+		}
+	}, {
+		key: 'ensureAccessor',
+		value: <span class="fstat-no" title="function not covered">function ensureAccessor(variableName) {</span>
+<span class="cstat-no" title="statement not covered">			var isWildcardImport = arguments.length &gt; 1 &amp;&amp; arguments[1] !== undefined ? arguments[1] : false;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered">			if (!this.accessors[variableName]) {</span>
+<span class="cstat-no" title="statement not covered">				this.accessors[variableName] = true;</span>
+<span class="cstat-no" title="statement not covered">				this.addTrackedIdentifier(variableName, isWildcardImport);</span>
+			}
+&nbsp;
+<span class="cstat-no" title="statement not covered">			return this.accessors[variableName];</span>
+		}
+	}, {
+		key: 'addTrackedIdentifier',
+		value: <span class="fstat-no" title="function not covered">function addTrackedIdentifier(variableName) {</span>
+<span class="cstat-no" title="statement not covered">			var isWildcardImport = arguments.length &gt; 1 &amp;&amp; arguments[1] !== undefined ? arguments[1] : false;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered">			this.isWildcardImport[variableName] = isWildcardImport;</span>
+<span class="cstat-no" title="statement not covered">			return this.trackedIdentfiers[variableName] = true;</span>
+		}
+	}, {
+		key: 'hasTrackedIdentifier',
+		value: <span class="fstat-no" title="function not covered">function hasTrackedIdentifier(variableName) {</span>
+<span class="cstat-no" title="statement not covered">			return !!this.trackedIdentfiers[variableName];</span>
+		}
+	}, {
+		key: 'addUpdateableVariable',
+		value: <span class="fstat-no" title="function not covered">function addUpdateableVariable(variableName) {</span>
+<span class="cstat-no" title="statement not covered">			this.updateableVariables[variableName] = true;</span>
+<span class="cstat-no" title="statement not covered">			this.ensureAccessor(variableName);</span>
+		}
+	}, {
+		key: 'setIgnoredIdentifiers',
+		value: <span class="fstat-no" title="function not covered">function setIgnoredIdentifiers(ignoredIdentifiers) {</span>
+<span class="cstat-no" title="statement not covered">			this.ignoredIdentifiers = ignoredIdentifiers || [];</span>
+		}
+	}, {
+		key: 'prependUniversalAccessors',
+		value: <span class="fstat-no" title="function not covered">function prependUniversalAccessors(scope) {</span>
+<span class="cstat-no" title="statement not covered">			var hasWildcardImport = Object.keys(this.isWildcardImport).some(<span class="fstat-no" title="function not covered">function (propertyName) {</span></span>
+<span class="cstat-no" title="statement not covered">				return this.isWildcardImport[propertyName];</span>
+			}.bind(this));
+<span class="cstat-no" title="statement not covered">			var filterWildcardImportIdentifier = hasWildcardImport &amp;&amp; (0, _RewireHelpers.noRewire)(scope.generateUidIdentifier('__filterWildcardImport__')) || null;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered">			var originalAccessor = t.functionDeclaration(this.originalVariableAccessorIdentifier, [t.identifier('variableName')], t.blockStatement([t.switchStatement(t.identifier('variableName'), Object.keys(this.accessors).map(<span class="fstat-no" title="function not covered">function (identifierName) {</span></span>
+<span class="cstat-no" title="statement not covered">				var accessOriginalVariable = (0, _RewireHelpers.noRewire)(t.identifier(identifierName));</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered">				if (this.isWildcardImport[identifierName]) {</span>
+<span class="cstat-no" title="statement not covered">					accessOriginalVariable = t.callExpression(filterWildcardImportIdentifier, [accessOriginalVariable]);</span>
+				}
+&nbsp;
+<span class="cstat-no" title="statement not covered">				return t.switchCase(t.stringLiteral(identifierName), [t.returnStatement(accessOriginalVariable)]);</span>
+			}, this)), t.returnStatement((0, _RewireHelpers.noRewire)(t.identifier('undefined')))]));
+&nbsp;
+<span class="cstat-no" title="statement not covered">			var valueVariable = scope.generateUidIdentifier('value');</span>
+<span class="cstat-no" title="statement not covered">			var originalSetter = t.functionDeclaration(this.originalVariableSetterIdentifier, [t.identifier('variableName'), valueVariable], t.blockStatement([t.switchStatement(t.identifier('variableName'), Object.keys(this.updateableVariables).map(<span class="fstat-no" title="function not covered">function (identifierName) {</span></span>
+<span class="cstat-no" title="statement not covered">				return t.switchCase(t.stringLiteral(identifierName), [t.returnStatement(t.assignmentExpression('=', (0, _RewireHelpers.noRewire)(t.identifier(identifierName)), valueVariable))]);</span>
+			})), t.returnStatement((0, _RewireHelpers.noRewire)(t.identifier('undefined')))]));
+&nbsp;
+<span class="cstat-no" title="statement not covered">			this.prependToProgramBody((0, _Templates.universalAccesorsTemplate)({</span>
+				ORIGINAL_VARIABLE_ACCESSOR_IDENTIFIER: this.originalVariableAccessorIdentifier,
+				ORIGINAL_VARIABLE_SETTER_IDENTIFIER: this.originalVariableSetterIdentifier,
+				ASSIGNMENT_OPERATION_IDENTIFIER: this.assignmentOperationIdentifier,
+				UPDATE_OPERATION_IDENTIFIER: this.updateOperationIdentifier,
+				ORIGINAL_ACCESSOR: originalAccessor,
+				ORIGINAL_SETTER: originalSetter,
+				UNIVERSAL_GETTER_ID: this.getUniversalGetterID(),
+				UNIVERSAL_SETTER_ID: this.getUniversalSetterID(),
+				UNIVERSAL_RESETTER_ID: this.getUniversalResetterID(),
+				UNIVERSAL_WITH_ID: this.getUniversalWithID(),
+				API_OBJECT_ID: this.getAPIObjectID(),
+				GET_GLOBAL_VARIABLE_HANDLE_IDENTIFIER: this.getGlobalVariableHandleIdentifier,
+				GET_REWIRE_DATA_IDENTIFIER: this.getRewiredDataIdentifier,
+				GET_UNIQUE_GLOBAL_MODULE_ID_IDENTIFIER: this.getUniqueGlobalModuleIdIdentifier,
+				GET_REWIRE_REGISTRY_IDENTIFIER: this.getRewireRegistryIdentifier,
+				UNIQUE_GLOBAL_MODULE_ID_IDENTIFIER: this.uniqueModuleIdIdentifier
+			}));
+&nbsp;
+<span class="cstat-no" title="statement not covered">			if (hasWildcardImport) {</span>
+<span class="cstat-no" title="statement not covered">				this.appendToProgramBody((0, _Templates.filterWildcardImportTemplate)({</span>
+					FILTER_WILDCARD_IMPORT_IDENTIFIER: filterWildcardImportIdentifier
+				}));
+			}
+		}
+	}, {
+		key: 'appendExports',
+		value: <span class="fstat-no" title="function not covered">function appendExports() {</span>
+<span class="cstat-no" title="statement not covered">			if (this.isES6Module &amp;&amp; (!this.hasCommonJSExport || this.hasES6Export)) {</span>
+<span class="cstat-no" title="statement not covered">				this.appendToProgramBody(this.generateNamedExports());</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered">				if (!this.hasES6DefaultExport) {</span>
+<span class="cstat-no" title="statement not covered">					this.appendToProgramBody(t.exportDefaultDeclaration(this.getAPIObjectID()));</span>
+				}
+			} else <span class="cstat-no" title="statement not covered">if (!this.isES6Module || !this.hasES6Export &amp;&amp; this.hasCommonJSExport) {</span>
+<span class="cstat-no" title="statement not covered">				var commonJSExport = t.memberExpression(t.identifier('module'), t.identifier('exports'), false);</span>
+<span class="cstat-no" title="statement not covered">				this.enrichExport(commonJSExport);</span>
+			}
+		}
+	}, {
+		key: 'enrichExport',
+		value: <span class="fstat-no" title="function not covered">function enrichExport(exportValue) {</span>
+<span class="cstat-no" title="statement not covered">			this.appendToProgramBody((0, _Templates.enrichExportTemplate)({</span>
+				TYPEOFORIGINALEXPORTVARIABLE: this.getTypeOfOriginalExportVariable(),
+				UNIVERSAL_GETTER_ID: this.getUniversalGetterID(),
+				UNIVERSAL_SETTER_ID: this.getUniversalSetterID(),
+				UNIVERSAL_RESETTER_ID: this.getUniversalResetterID(),
+				UNIVERSAL_WITH_ID: this.getUniversalWithID(),
+				API_OBJECT_ID: this.getAPIObjectID(),
+				EXPORT_VALUE: exportValue
+			}));
+		}
+	}, {
+		key: 'generateNamedExports',
+		value: <span class="fstat-no" title="function not covered">function generateNamedExports() {</span>
+<span class="cstat-no" title="statement not covered">			return t.exportNamedDeclaration(null, [t.exportSpecifier(this.getUniversalGetterID(), t.identifier('__get__')), t.exportSpecifier(this.getUniversalGetterID(), t.identifier('__GetDependency__')), t.exportSpecifier(this.getUniversalSetterID(), t.identifier('__Rewire__')), t.exportSpecifier(this.getUniversalSetterID(), t.identifier('__set__')), t.exportSpecifier(this.getUniversalResetterID(), t.identifier('__ResetDependency__')), t.exportSpecifier(this.getAPIObjectID(), t.identifier('__RewireAPI__'))]);</span>
+		}
+	}, {
+		key: 'containsDependenciesToRewire',
+		value: <span class="fstat-no" title="function not covered">function containsDependenciesToRewire() {</span>
+<span class="cstat-no" title="statement not covered">			return Object.keys(this.accessors).length &gt; 0 || Object.keys(this.updateableVariables).length &gt; 0;</span>
+		}
+	}, {
+		key: 'getUniversalGetterID',
+		value: <span class="fstat-no" title="function not covered">function getUniversalGetterID() {</span>
+<span class="cstat-no" title="statement not covered">			return this.universalAccessors['__get__'];</span>
+		}
+	}, {
+		key: 'getUpdateOperationID',
+		value: <span class="fstat-no" title="function not covered">function getUpdateOperationID() {</span>
+<span class="cstat-no" title="statement not covered">			return this.updateOperationIdentifier;</span>
+		}
+	}, {
+		key: 'getAssignmentOperationID',
+		value: <span class="fstat-no" title="function not covered">function getAssignmentOperationID() {</span>
+<span class="cstat-no" title="statement not covered">			return this.assignmentOperationIdentifier;</span>
+		}
+	}, {
+		key: 'getUniversalSetterID',
+		value: <span class="fstat-no" title="function not covered">function getUniversalSetterID() {</span>
+<span class="cstat-no" title="statement not covered">			return this.universalAccessors['__set__'];</span>
+		}
+	}, {
+		key: 'getUniversalResetterID',
+		value: <span class="fstat-no" title="function not covered">function getUniversalResetterID() {</span>
+<span class="cstat-no" title="statement not covered">			return this.universalAccessors['__reset__'];</span>
+		}
+	}, {
+		key: 'getUniversalWithID',
+		value: <span class="fstat-no" title="function not covered">function getUniversalWithID() {</span>
+<span class="cstat-no" title="statement not covered">			return this.universalAccessors['__with__'];</span>
+		}
+	}, {
+		key: 'getAPIObjectID',
+		value: <span class="fstat-no" title="function not covered">function getAPIObjectID() {</span>
+<span class="cstat-no" title="statement not covered">			return this.universalAccessors['__RewireAPI__'];</span>
+		}
+	}, {
+		key: 'getTypeOfOriginalExportVariable',
+		value: <span class="fstat-no" title="function not covered">function getTypeOfOriginalExportVariable() {</span>
+<span class="cstat-no" title="statement not covered">			return this.typeofOriginalExportVariable;</span>
+		}
+	}]);
+&nbsp;
+	return RewireState;
+}();
+&nbsp;
+exports.default = RewireState;
+;
+&nbsp;</pre></td></tr>
+</tbody></table></pre>
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a> at Thu Apr 20 2017 16:45:38 GMT+0000 (UTC)</div>
+</div>
+
+
+</body></html>
